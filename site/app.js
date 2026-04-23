@@ -1,0 +1,75 @@
+const [meta, chapters] = await Promise.all([
+  fetch('./data/site-metadata.json').then((r) => r.json()),
+  fetch('./data/chapters.json').then((r) => r.json()),
+]);
+
+const byNewest = [...chapters].sort((a, b) => b.date.localeCompare(a.date));
+const latest = byNewest[0];
+
+document.getElementById('site-title').textContent = meta.title;
+document.getElementById('site-subtitle').textContent = meta.description;
+document.getElementById('hero-quote').textContent = meta.heroQuote;
+document.getElementById('chapter-count').textContent = `${meta.chapterCount} 篇章节`;
+document.getElementById('updated-at').textContent = `最后更新：${meta.updatedAt}`;
+
+document.getElementById('review-prompts').innerHTML = `
+  <h4>${latest.review.question}</h4>
+  <ul>${latest.review.prompts.map((item) => `<li>${item}</li>`).join('')}</ul>
+`;
+
+const list = document.getElementById('chapter-list');
+const dialog = document.getElementById('chapter-dialog');
+const dialogContent = document.getElementById('dialog-content');
+
+function renderChoice(choice) {
+  return `
+    <div class="choice">
+      <div><span class="choice-label">${choice.label}.</span><span class="choice-title">${choice.title}</span></div>
+      <div class="choice-action">${choice.action}</div>
+      <div class="choice-details">details：${choice.details}</div>
+    </div>
+  `;
+}
+
+function renderCard(chapter) {
+  const article = document.createElement('article');
+  article.className = 'chapter-card';
+  article.innerHTML = `
+    <div class="chapter-meta"><span>${chapter.date}</span><span>${chapter.scene}</span></div>
+    <h3>${chapter.title}</h3>
+    <p>${chapter.summary}</p>
+    <div class="choice-grid">${chapter.choices.map(renderChoice).join('')}</div>
+    <button class="primary-button read-more">查看剧情与复盘</button>
+  `;
+  article.querySelector('.read-more').addEventListener('click', () => openDialog(chapter));
+  return article;
+}
+
+function openDialog(chapter) {
+  dialogContent.innerHTML = `
+    <header class="dialog-header">
+      <div class="chapter-meta"><span>${chapter.date}</span><span>${chapter.scene}</span></div>
+      <h2>${chapter.title}</h2>
+      <p class="scene-copy">${chapter.summary}</p>
+    </header>
+    <section>
+      <p class="body-copy">${chapter.body}</p>
+      <div class="choice-grid">${chapter.choices.map(renderChoice).join('')}</div>
+      <div class="review-box">
+        <p class="section-kicker">复盘</p>
+        <h3>${chapter.review.question}</h3>
+        <ul>${chapter.review.prompts.map((item) => `<li>${item}</li>`).join('')}</ul>
+      </div>
+    </section>
+  `;
+  dialog.showModal();
+}
+
+dialog.addEventListener('click', (event) => {
+  const rect = dialog.getBoundingClientRect();
+  const inside = rect.top <= event.clientY && event.clientY <= rect.bottom && rect.left <= event.clientX && event.clientX <= rect.right;
+  if (!inside) dialog.close();
+});
+
+document.getElementById('latest-button').addEventListener('click', () => openDialog(latest));
+byNewest.forEach((chapter) => list.appendChild(renderCard(chapter)));

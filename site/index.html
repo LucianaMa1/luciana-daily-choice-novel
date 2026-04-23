@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>她在正午重开人生</title>
+  <meta name="description" content="女主的人生选择与复盘日更站点" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="./styles.css" />
+</head>
+<body>
+  <div class="background-glow"></div>
+  <header class="hero shell">
+    <div class="hero-copy">
+      <p class="eyebrow">日更剧情 · 人生选择 · 复盘手册</p>
+      <h1 id="site-title">她在正午重开人生</h1>
+      <p class="subtitle" id="site-subtitle"></p>
+      <p class="hero-quote" id="hero-quote"></p>
+      <div class="hero-meta">
+        <span id="chapter-count"></span>
+        <span id="updated-at"></span>
+      </div>
+    </div>
+    <aside class="hero-card">
+      <div class="hero-card-label">女主设定</div>
+      <h2>前世把机会耗在拖延里，这一世只信可见推进。</h2>
+      <p>她的反派不是别人，是短视频、假装忙碌、情绪化逃避和低门槛快感。每次更新都记录她如何在现实里把主线夺回来。</p>
+    </aside>
+  </header>
+
+  <main class="shell layout">
+    <section>
+      <div class="section-head">
+        <div>
+          <p class="section-kicker">最近更新</p>
+          <h2>章节档案</h2>
+        </div>
+        <button id="latest-button" class="primary-button">阅读最新一章</button>
+      </div>
+      <div id="chapter-list" class="chapter-list"></div>
+    </section>
+
+    <aside class="sidebar">
+      <section class="panel">
+        <p class="section-kicker">阅读说明</p>
+        <h3>怎么看这本“现实小说”</h3>
+        <ul>
+          <li>A：推进最重要的主线事项</li>
+          <li>B：回收伏笔，处理关键沟通或阻塞</li>
+          <li>D：斩断支线，夺回注意力与自控力</li>
+        </ul>
+      </section>
+      <section class="panel">
+        <p class="section-kicker">复盘问题</p>
+        <div id="review-prompts" class="review-prompts"></div>
+      </section>
+    </aside>
+  </main>
+
+  <dialog id="chapter-dialog" class="chapter-dialog">
+    <form method="dialog" class="dialog-surface">
+      <button class="close-button" aria-label="关闭">×</button>
+      <article id="dialog-content"></article>
+    </form>
+  </dialog>
+
+  <script src="./app.js" type="module"></script>
+</body>
+</html>
