@@ -21,6 +21,7 @@
       <div class="hero-meta">
         <span id="chapter-count"></span>
         <span id="updated-at"></span>
+        <span id="progress-count"></span>
       </div>
     </div>
     <aside class="hero-card">
@@ -43,6 +44,10 @@
     </section>
 
     <aside class="sidebar">
+      <section class="panel progress-panel">
+        <p class="section-kicker">今日实际选择</p>
+        <div id="latest-progress"></div>
+      </section>
       <section class="panel">
         <p class="section-kicker">阅读说明</p>
         <h3>怎么看这本“现实小说”</h3>
@@ -58,6 +63,16 @@
       </section>
     </aside>
   </main>
+
+  <section class="shell progress-section">
+    <div class="section-head">
+      <div>
+        <p class="section-kicker">真实进度</p>
+        <h2>女主已经做出的选择</h2>
+      </div>
+    </div>
+    <div id="progress-timeline" class="progress-timeline"></div>
+  </section>
 
   <dialog id="chapter-dialog" class="chapter-dialog">
     <form method="dialog" class="dialog-surface">
